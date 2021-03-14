@@ -56,24 +56,41 @@ func (s *memoryStorage) delete(id int) (error) {
 type dumpStorage struct {}
 
 func newDumpStorage() *dumpStorage {
-	return &dumpStorage
+	return &dumpStorage{}
 }
 
 func (s *dumpStorage) insert(e employee) error {
-	fmt.Printf("Insert user with id: %d successful", e.id)
+	fmt.Printf("Insert user with id: %d successful\n", e.id)
+	return nil
+}
+
+func (s *dumpStorage) get(id int) (employee, error) {
+	e := employee {
+		id: id,
+	}
+
+	return e, nil
+}
+
+func (e *dumpStorage) delete(id int) error {
+	fmt.Printf("Delete user with id: %d successful\n", id)
 	return nil
 }
 
 // --- Dump Storage End ---
 
+func spawnEmployees(s storage) {
+	for i := 1; i <= 10; i++ {
+		s.insert(employee {id: i})
+	}
+}
+
 func main() {
-	var s storage
+	ms := newMemoryStorage()
+	ds := newDumpStorage()
 
-	fmt.Println("s == nil", s == nil)
-	fmt.Printf("type of s: %T\n", s)
+	spawnEmployees(ms)
+	fmt.Println(ms.get(3))
 
-	s = newMemoryStorage()
-
-	fmt.Println("s == nil", s == nil)
-	fmt.Printf("type of s: %T\n", s)
+	spawnEmployees(ds)
 }
