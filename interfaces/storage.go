@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -14,46 +13,46 @@ type employee struct {
 
 // --- Memory Storage Start ---
 
-type storage interface {
-	insert(e employee) error
-	get(id int) (employee, error)
-	delete(id int) error
-}
+// type storage interface {
+// 	insert(e employee) error
+// 	get(id int) (employee, error)
+// 	delete(id int) error
+// }
 
-type memoryStorage struct {
-	data map[int]employee
-}
+// type memoryStorage struct {
+// 	data map[int]employee
+// }
 
-func newMemoryStorage() *memoryStorage {
-	return &memoryStorage{
-		data: make(map[int]employee),
-	}
-}
+// func newMemoryStorage() *memoryStorage {
+// 	return &memoryStorage{
+// 		data: make(map[int]employee),
+// 	}
+// }
 
-func (s *memoryStorage) insert(e employee) error {
-	s.data[e.id] = e
-	return nil
-}
+// func (s *memoryStorage) insert(e employee) error {
+// 	s.data[e.id] = e
+// 	return nil
+// }
 
-func (s *memoryStorage) get(id int) (employee, error) {
-	e, exist := s.data[id]
+// func (s *memoryStorage) get(id int) (employee, error) {
+// 	e, exist := s.data[id]
 
-	if !exist {
-		return employee{}, errors.New("employee with such id dosn't exist")
-	}
+// 	if !exist {
+// 		return employee{}, errors.New("employee with such id dosn't exist")
+// 	}
 
-	return e, nil
-}
+// 	return e, nil
+// }
 
-func (s *memoryStorage) delete(id int) (error) {
-	delete(s.data, id)
-	return nil
-}
+// func (s *memoryStorage) delete(id int) (error) {
+// 	delete(s.data, id)
+// 	return nil
+// }
 // --- Memory Storage End ---
 
 // --- Dump Storage Start ---
 
-type dumpStorage struct {}
+type dumpStorage struct{}
 
 func newDumpStorage() *dumpStorage {
 	return &dumpStorage{}
@@ -65,7 +64,7 @@ func (s *dumpStorage) insert(e employee) error {
 }
 
 func (s *dumpStorage) get(id int) (employee, error) {
-	e := employee {
+	e := employee{
 		id: id,
 	}
 
@@ -81,7 +80,7 @@ func (e *dumpStorage) delete(id int) error {
 
 func spawnEmployees(s storage) {
 	for i := 1; i <= 10; i++ {
-		s.insert(employee {id: i})
+		s.insert(employee{id: i})
 	}
 }
 
